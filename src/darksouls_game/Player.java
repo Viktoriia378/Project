@@ -6,16 +6,12 @@ public class Player implements Fighter{
 
     public Player(){
         this.hp = 100;
-        this.estus = 1;
+        this.estus = 3;
     }
 
     @Override
     public int getHp() {
         return hp;
-    }
-
-    public int getEstus() {
-        return estus;
     }
 
     @Override
@@ -29,7 +25,7 @@ public class Player implements Fighter{
     }
     public int heal(){
         if(estus > 0){
-            int healAmount = (int) (Math.random() * 15 + 10);
+            int healAmount = (int) (Math.random() * 20 + 10);
             hp += healAmount;
             estus --;
             return healAmount;

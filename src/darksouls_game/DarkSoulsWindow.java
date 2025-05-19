@@ -1,11 +1,13 @@
 package darksouls_game;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class DarkSoulsWindow extends JFrame {
+    private final CardLayout cardLayout = new CardLayout(); //smooth transition
+    private final JPanel mainPanel = new JPanel(cardLayout); // first intro dan battle
+
     private final BattleManager battle;
-    private final CardLayout cardLayout = new CardLayout();
-    private final JPanel mainPanel = new JPanel(cardLayout);
     private final IntroPanel introPanel = new IntroPanel();
     private final BattlePanel battlePanel = new BattlePanel();
 
@@ -19,16 +21,18 @@ public class DarkSoulsWindow extends JFrame {
         battlePanel.getEstusButton().addActionListener(e -> handleAction("heal"));
         battlePanel.getDodgeButton().addActionListener(e -> handleAction("dodge"));
 
+        //Screen, icon, exit
         setTitle("Dark Souls Mini");
-        setSize(400, 500); //sets the x-dimension and y-dimension
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit out of application
+        setSize(400, 500); //x-dimension and y-dimension
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon icon = new ImageIcon("img/256x256.png");
         setIconImage(icon.getImage());
 
         battlePanel.updateStatus(battle.getPlayerHp(), battle.getBossHp());
         battlePanel.log("You woke up by the bonfire... Forward into battle!");
 
-        setVisible(true);
+        setVisible(true); // my screen
+
         mainPanel.add(introPanel, "intro");
         mainPanel.add(battlePanel, "battle");
         add(mainPanel);
@@ -78,7 +82,7 @@ public class DarkSoulsWindow extends JFrame {
             if (battle.playerWon()) {
                 battlePanel.log("VICTORY" + "\nSouls received: 500");
             } else {
-                battlePanel.log("YOU DEAD");
+                battlePanel.log("YOU DIED");
             }
             battlePanel.disableButtons();
         }

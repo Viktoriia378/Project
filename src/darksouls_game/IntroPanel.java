@@ -8,7 +8,7 @@ public class IntroPanel extends JPanel {
     private final JLabel subtitleLabel = new JLabel("", SwingConstants.CENTER);
 
     public IntroPanel(){
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout()); // make img - center, subs - plain
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         subtitleLabel.setPreferredSize(new Dimension(400, 100));
         subtitleLabel.setFont(new Font("Serif", Font.PLAIN, 18));

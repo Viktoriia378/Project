@@ -3,6 +3,7 @@ package darksouls_game;
 public class BattleManager {
     private final Player player;
     private final Boss boss;
+    private boolean playerDodge = false;
 
     public BattleManager(Player player, Boss boss) {
         this.player = player;
@@ -17,30 +18,25 @@ public class BattleManager {
 
     public String playerHeal(){
         if (player.hasEstus()) {
-            int heald = player.heal();
-            return "You drank estus and restored " + heald + " HP.";
+            int healed = player.heal();
+            return "You drank estus and restored " + healed + " HP.";
         }else{
-            return "You dont have anymore estus.";
+            return "You don't have anymore estus.";
         }
     }
 
     public String playerDodge(){
-        boolean dodged = Math.random() < 0.5;
-        if(dodged){
-            return "You dodged the attack.";
-        } else {
-            int dmg = boss.attack();
-            player.takeDamage(dmg);
-            return "No luck for you.. " + dmg + " damage.";
+        playerDodge = Math.random() < 0.6;
+            return playerDodge ? "You dodge successfully!" : "You failed to dodge.";
         }
-    }
     public String bossTurn(){
-        if(boss.getHp() > 0){
-            int dmg = boss.attack();
-            player.takeDamage(dmg);
-            return "Boss is attacking you and dealing to you " + dmg + " damage.";
+        if(playerDodge){
+            playerDodge = false;
+            return "Boss is attacking you but you dodged!";
         }
-        return "";
+        int damage = (int)(Math.random() * 20 + 10);
+        player.takeDamage(damage);
+        return "Boss is attacking you with " + damage + " damage!";
     }
     public boolean isGameOver(){
         return player.getHp() <= 0 || boss.getHp() <= 0;
