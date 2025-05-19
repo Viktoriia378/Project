@@ -1,5 +1,4 @@
 package darksouls_game;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,13 +9,14 @@ public class DarkSoulsWindow extends JFrame {
     private JLabel playerHpLabel, bossHpLabel;
     private final BattleManager battle;
     private final CardLayout cardLayout = new CardLayout();
-    private final JPanel mainPanel = new JPanel();
+    private final JPanel mainPanel = new JPanel(cardLayout);
     // intro
     private final JPanel introPanel = new JPanel(new BorderLayout());
     private final JLabel imageLabel = new JLabel();
     private final JLabel subtitleLabel = new JLabel("", SwingConstants.CENTER);
     //fight
     private final JPanel battlePanel = new JPanel(new BorderLayout());
+    private final JLabel imageBattle = new JLabel();
 
     public DarkSoulsWindow() {
         Player player = new Player();
@@ -24,7 +24,7 @@ public class DarkSoulsWindow extends JFrame {
         battle = new BattleManager(player, boss);
 
         setTitle("Dark Souls Mini");
-        setSize(400, 400); //sets the x-dimension and y-dimension
+        setSize(400, 500); //sets the x-dimension and y-dimension
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit out of application
         ImageIcon icon = new ImageIcon("img/256x256.png");
         setIconImage(icon.getImage());
@@ -54,11 +54,7 @@ public class DarkSoulsWindow extends JFrame {
         estusButton.addActionListener(e -> handleAction("heal"));
         dodgeButton.addActionListener(e -> handleAction("dodge"));
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(attackButton);
-        buttonPanel.add(estusButton);
-        buttonPanel.add(dodgeButton);
-        battlePanel.add(buttonPanel, BorderLayout.SOUTH);
+
 
         updateStatus();
         log("You woke up by the bonfire... Forward into battle!");
@@ -89,18 +85,24 @@ public class DarkSoulsWindow extends JFrame {
         cardLayout.show(mainPanel, "intro");
         setImage("img/bonfire.png");
         subtitleLabel.setText("You woke up by the bonfire...");
-        new javax.swing.Timer(3000, e1 -> {
+        Timer t1 = new Timer(4500, e1 -> {
             setImage("img/dark.png");
             subtitleLabel.setText("You are going to the dark...");
 
-            new javax.swing.Timer(3000, e2 -> {
+            Timer t2 = new Timer(4500, e2 -> {
                 setImage("img/fight.png");
                 subtitleLabel.setText("for the battle!");
-                new javax.swing.Timer(3000, e3 -> {
+                Timer t3 = new Timer(4500, e3 -> {
                     startBattleUI();
-                }).start();
-            }).start();
-        }).start();
+                });
+                t3.setRepeats(false);
+                t3.start();
+            });
+            t2.setRepeats(false);
+            t2.start();
+        });
+        t1.setRepeats(false);
+        t1.start();
     }
 
     public void handleAction(String action) {
@@ -127,11 +129,35 @@ public class DarkSoulsWindow extends JFrame {
             disableButtons();
         }
     }
-    private void startBattleUI(){
+
+    private void startBattleUI() {
         cardLayout.show(mainPanel, "battle");
+        battlePanel.removeAll();
+        battlePanel.setLayout(new BoxLayout(battlePanel, BoxLayout.Y_AXIS));
+        ImageIcon icon = new ImageIcon("img/fight.png");
+        Image scaled = icon.getImage().getScaledInstance(400, 200, Image.SCALE_SMOOTH);
+        imageBattle.setIcon(new ImageIcon(scaled));
+        battlePanel.add(imageBattle);
+
+        JPanel statusPanel = new JPanel(new GridLayout(1, 2));
+        //playerHpLabel = new JLabel();
+        //bossHpLabel = new JLabel();
+        statusPanel.add(playerHpLabel);
+        statusPanel.add(bossHpLabel);
+        battlePanel.add(statusPanel);
+
+        battlePanel.add(new JScrollPane(logArea));
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(attackButton);
+        buttonPanel.add(estusButton);
+        buttonPanel.add(dodgeButton);
+        battlePanel.add(buttonPanel);
+
         updateStatus();
         log("He is coming...");
     }
+
     private void updateStatus() {
         playerHpLabel.setText("Knight HP: " + Math.max(battle.getPlayerHp(), 0));
         bossHpLabel.setText("Boss HP: " + Math.max(battle.getBossHp(), 0));
