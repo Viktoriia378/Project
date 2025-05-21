@@ -6,7 +6,6 @@ import java.awt.*;
 public class DarkSoulsWindow extends JFrame {
     private final CardLayout cardLayout = new CardLayout(); //smooth transition
     private final JPanel mainPanel = new JPanel(cardLayout); // first intro dan battle
-
     private final BattleManager battle;
     private final IntroPanel introPanel = new IntroPanel();
     private final BattlePanel battlePanel = new BattlePanel();
@@ -20,10 +19,13 @@ public class DarkSoulsWindow extends JFrame {
         battlePanel.getAttackButton().addActionListener(e -> handleAction("attack"));
         battlePanel.getEstusButton().addActionListener(e -> handleAction("heal"));
         battlePanel.getDodgeButton().addActionListener(e -> handleAction("dodge"));
-
+        battlePanel.getRetryButton().addActionListener(e -> {
+            dispose();
+            new DarkSoulsWindow();
+        });
         //Screen, icon, exit
         setTitle("Dark Souls Mini");
-        setSize(400, 500); //x-dimension and y-dimension
+        setSize(600, 500); //x-dimension and y-dimension
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon icon = new ImageIcon("img/256x256.png");
         setIconImage(icon.getImage());
@@ -43,14 +45,14 @@ public class DarkSoulsWindow extends JFrame {
         cardLayout.show(mainPanel, "intro");
         introPanel.setImage("img/bonfire.png");
         introPanel.setSubtitle("You woke up by the bonfire...");
-        Timer t1 = new Timer(4500, e1 -> {
+        Timer t1 = new Timer(3500, e1 -> {
             introPanel.setImage("img/dark.png");
             introPanel.setSubtitle("You are going to the dark...");
 
-            Timer t2 = new Timer(4500, e2 -> {
+            Timer t2 = new Timer(3500, e2 -> {
                 introPanel.setImage("img/fight.png");
                 introPanel.setSubtitle("for the battle!");
-                Timer t3 = new Timer(4500, e3 -> {
+                Timer t3 = new Timer(3500, e3 -> {
                     startBattleUI();
                 });
                 t3.setRepeats(false);
@@ -85,6 +87,11 @@ public class DarkSoulsWindow extends JFrame {
                 battlePanel.log("YOU DIED");
             }
             battlePanel.disableButtons();
+            new javax.swing.Timer(1000, e -> {
+                battlePanel.getRetryButton().setVisible(true);
+                battlePanel.revalidate(); //update panel
+                battlePanel.repaint();
+            }).start();
         }
     }
 

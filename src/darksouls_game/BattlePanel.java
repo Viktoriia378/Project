@@ -10,6 +10,7 @@ public class BattlePanel extends JPanel {
     private final JButton attackButton = new JButton("Attack");
     private final JButton estusButton = new JButton("Drink estus");
     private final JButton dodgeButton = new JButton("Shield");
+    private final JButton retryButton = new JButton("Retry");
     private JTextArea logArea = new JTextArea();
 
     public BattlePanel(){
@@ -33,6 +34,9 @@ public class BattlePanel extends JPanel {
         buttonPanel.add(estusButton);
         buttonPanel.add(dodgeButton);
         add(buttonPanel);
+
+        retryButton.setVisible(false);
+        add(retryButton);
     }
     public void updateStatus(int playerHp, int bossHp) {
         playerHpLabel.setText("Knight HP: " + Math.max(playerHp, 0));
@@ -57,4 +61,5 @@ public class BattlePanel extends JPanel {
     public JButton getDodgeButton(){
         return dodgeButton;
     }
+    public JButton getRetryButton(){return retryButton;}
 }
