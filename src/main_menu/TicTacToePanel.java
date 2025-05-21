@@ -1,23 +1,21 @@
 package main_menu;
 
-import snake.GamePanel;
+import tic_tac_toe.TicTacToe;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SnakePanel extends JPanel {
-    public SnakePanel(MainMenu app) {
+public class TicTacToePanel extends JPanel {
+
+    public TicTacToePanel(MainMenu app) {
         setLayout(new BorderLayout());
 
-        GamePanel gameSnake = new GamePanel();
-        add(gameSnake, BorderLayout.CENTER);
+
+        TicTacToe gameTicTacToe = new TicTacToe();
+        gameTicTacToe.main(new String[0]);
 
         JButton backButton = new JButton("\uD83E\uDDE9Back to menu");
         backButton.addActionListener(e -> app.showScreen("menu"));
         add(backButton, BorderLayout.SOUTH);
-
-
-        SwingUtilities.invokeLater(gameSnake::requestFocusInWindow);
     }
 }
-

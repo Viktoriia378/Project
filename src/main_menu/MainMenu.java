@@ -9,13 +9,14 @@ public class MainMenu extends JFrame{
 
     public MainMenu(){
         setTitle("Game Hub");
-        setSize(800, 850);
+        setSize(700, 750);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null); //screen center
 
-        //our games
+        //panel menu
         mainPanel.add(new MenuPanel(this), "menu");
 
+        //menu in main screen
         add(mainPanel);
         setVisible(true);
 
