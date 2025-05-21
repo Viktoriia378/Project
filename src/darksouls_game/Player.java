@@ -25,7 +25,7 @@ public class Player implements Fighter{
     }
     public int heal(){
         if(estus > 0){
-            int healAmount = (int) (Math.random() * 20 + 10);
+            int healAmount = 40;
             hp += healAmount;
             estus --;
             return healAmount;

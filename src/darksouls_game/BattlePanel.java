@@ -9,7 +9,7 @@ public class BattlePanel extends JPanel {
     private final JLabel bossHpLabel = new JLabel();
     private final JButton attackButton = new JButton("Attack");
     private final JButton estusButton = new JButton("Drink estus");
-    private final JButton dodgeButton = new JButton("Dodge");
+    private final JButton dodgeButton = new JButton("Shield");
     private JTextArea logArea = new JTextArea();
 
     public BattlePanel(){

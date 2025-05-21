@@ -91,7 +91,10 @@ public class DarkSoulsWindow extends JFrame {
     private void startBattleUI() {
         cardLayout.show(mainPanel, "battle");
         battlePanel.updateStatus(battle.getPlayerHp(), battle.getBossHp());
-        battlePanel.log("He is coming... attack or dodge!");
+        battlePanel.log("Hint: knight has 3 estus (heal). " +
+                "You can use a shield to protect yourself! " +
+                "\nRules: this is a turn based battle! After your choice the boss will attack you immediately!" +
+                "\nHe is coming... attack!");
     }
 
     public static void main(String[] args) {

@@ -21,18 +21,18 @@ public class BattleManager {
             int healed = player.heal();
             return "You drank estus and restored " + healed + " HP.";
         }else{
-            return "You don't have anymore estus.";
+            return "You don't have estus anymore.";
         }
     }
 
     public String playerDodge(){
         playerDodge = Math.random() < 0.6;
-            return playerDodge ? "You dodge successfully!" : "You failed to dodge.";
+            return playerDodge ? "You protected yourself!" : "You failed to protect yourself.";
         }
     public String bossTurn(){
         if(playerDodge){
             playerDodge = false;
-            return "Boss is attacking you but you dodged!";
+            return "Boss is attacking you but you used shield!";
         }
         int damage = (int)(Math.random() * 20 + 10);
         player.takeDamage(damage);
